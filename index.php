@@ -3,6 +3,38 @@ $is_auth = rand(0, 1);
 
 $user_name = 'Ромaн'; // укажите здесь ваше имя
 
+function get_text_content($text, $num_letters = 300) : string {
+    $text_length = mb_strlen($text);
+
+    if ($text_length > $num_letters) {
+        $words = explode(' ', $text);
+        $result_words_length = 0;
+        $result_words = [];
+
+        foreach ($words as $word) {
+            $result_words_length += mb_strlen($word);
+
+            if ($result_words_length > $num_letters) {
+                break;
+            }
+
+            $result_words_length += 1;
+            $result_words[] = $word;
+        }
+
+        $result = implode(' ', $result_words);
+
+        $result .= '...';
+        $result = '<p>' . $result . '</p>';
+        $result .= '<a class="post-text__more-link" href="#">Читать далее</a>';
+    } else {
+        $result = '<p>' . $text . '</p>';
+    }
+
+    return $result;
+}
+
+
 $posts = [
 
     [
@@ -15,7 +47,7 @@ $posts = [
     [
         'title' => 'Игра престолов',
         'type' => 'post-text',
-        'content' => 'Не могу дождаться начала финального сезона своего любимого сериала!',
+        'content' => 'Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала!',
         'user_name' => 'Владик',
         'avatar' => 'userpic.jpg'
     ],
@@ -299,7 +331,7 @@ $posts = [
                             <?php break;
                         case "post-text": ?>
                             <!--содержимое для поста-текста-->
-                            <p><?= $value['content'] ?></p>
+                            <p><?= get_text_content($value['content']); ?></p>
                             <?php break;
                     endswitch; ?>
                 </div>
