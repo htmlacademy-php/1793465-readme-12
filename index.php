@@ -1,55 +1,31 @@
 <?php /** @noinspection PhpUndefinedVariableInspection */
+require_once ('connect.php');
 require_once('helpers.php');
 require_once ('functions.php');
 
 $is_auth = rand(0, 1);
 $user_name = 'Ромaн'; // укажите здесь ваше имя
 
-$posts = [
+/* SQL-запрос для получения типов контента */
+$content_type = "SELECT * FROM `content_type`";
+$result_content_type = mysqli_query($con, $content_type);
+$content_type_arr = mysqli_fetch_all($result_content_type, MYSQLI_ASSOC);
 
-    [
-        'title' => 'Цитата',
-        'type' => 'post-quote',
-        'content' => 'Мы в жизни любим только раз, а после ищем лишь похожих',
-        'user_name' => 'Лариса',
-        'avatar' => 'userpic-larisa-small.jpg',
-        'date' => generate_random_date(0)
-    ],
-    [
-        'title' => 'Игра престолов',
-        'type' => 'post-text',
-        'content' => 'Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала! Не могу дождаться начала финального сезона своего любимого сериала!',
-        'user_name' => 'Владик',
-        'avatar' => 'userpic.jpg',
-        'date' => generate_random_date(1)
-    ],
-    [
-        'title' => 'Наконец, обработал фотки!',
-        'type' => 'post-photo',
-        'content' => 'rock-medium.jpg',
-        'user_name' => 'Виктор',
-        'avatar' => 'userpic-mark.jpg',
-        'date' => generate_random_date(2)
-    ],
-    [
-        'title' => 'Моя мечта',
-        'type' => 'post-photo',
-        'content' => 'coast-medium.jpg',
-        'user_name' => 'Лариса',
-        'avatar' => 'userpic-larisa-small.jpg',
-        'date' => generate_random_date(3)
-    ],
-    [
-        'title' => 'Лучшие курсы',
-        'type' => 'post-link',
-        'content' => 'www.htmlacademy.ru',
-        'user_name' => 'Владик',
-        'avatar' => 'userpic.jpg',
-        'date' => generate_random_date(4)
-    ]
-];
+// запрос на показ девяти самых популярных постов
+$posts_sql = 'SELECT * FROM posts
+JOIN users ON user_id = unique_id_user
+JOIN content_type ON content_type_id = unique_id_content_type ORDER BY views DESC';
+$result_posts = mysqli_query($con, $posts_sql);
 
-$main_block = include_template('main.php', ['posts' => $posts]);
+if (isset($_GET['post_list'])) {
+    $active_tab = $_GET['post_list'];
+    $sql = show_tasks_by_date($active_tab);
+    $result_posts = mysqli_query($con, $sql);
+}
+
+$posts_arr = mysqli_fetch_all($result_posts, MYSQLI_ASSOC);
+
+$main_block = include_template('main.php', ['posts_arr' => $posts_arr, 'content_type_arr' =>  $content_type_arr]);
 $layout_block = include_template('layout.php', ['content' => $main_block, 'is_auth' => $is_auth, 'user_name' => $user_name, 'title' => 'readme: популярное']);
 print($layout_block);
 ?>

@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
                         `pub_date_post` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
                         `title` VARCHAR(50) NOT NULL ,
                         `text` TEXT(2000) NULL ,
+                        `text_quote` TEXT(500) NULL,
                         `author_quote` VARCHAR(100) NULL ,
                         `image_link` VARCHAR(100) NULL ,
                         `video_link` VARCHAR(100) NULL ,

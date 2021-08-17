@@ -36,71 +36,41 @@
             <b class="popular__filters-caption filters__caption">Тип контента:</b>
             <ul class="popular__filters-list filters__list">
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                    <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="#">
+                    <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="index.php?post_list=posts">
                         <span>Все</span>
                     </a>
                 </li>
+                <?php foreach ($content_type_arr as $type): ?>
                 <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--photo button" href="#">
-                        <span class="visually-hidden">Фото</span>
+                    <a class="filters__button filters__button--photo button" href="index.php?post_list=<?= $type['class_name']; ?>">
+                        <span class="visually-hidden"><?= $type['type_name']; ?></span>
                         <svg class="filters__icon" width="22" height="18">
-                            <use xlink:href="#icon-filter-photo"></use>
+                            <use xlink:href="#icon-filter-<?= $type['class_name']; ?>"></use>
                         </svg>
                     </a>
                 </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--video button" href="#">
-                        <span class="visually-hidden">Видео</span>
-                        <svg class="filters__icon" width="24" height="16">
-                            <use xlink:href="#icon-filter-video"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--text button" href="#">
-                        <span class="visually-hidden">Текст</span>
-                        <svg class="filters__icon" width="20" height="21">
-                            <use xlink:href="#icon-filter-text"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--quote button" href="#">
-                        <span class="visually-hidden">Цитата</span>
-                        <svg class="filters__icon" width="21" height="20">
-                            <use xlink:href="#icon-filter-quote"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--link button" href="#">
-                        <span class="visually-hidden">Ссылка</span>
-                        <svg class="filters__icon" width="21" height="18">
-                            <use xlink:href="#icon-filter-link"></use>
-                        </svg>
-                    </a>
-                </li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </div>
     <div class="popular__posts">
-        <?php foreach ($posts as $value): ?>
-            <article class="popular__post post <?= $value['type']; ?>">
+        <?php foreach ($posts_arr as $value): ?>
+            <article class="popular__post post <?= $value['class_name']; ?>">
                 <header class="post__header">
                     <h2><?= htmlspecialchars($value['title']); ?></h2>
                 </header>
                 <div class="post__main">
-                    <?php switch ($value['type']):
-                        case "post-quote": ?>
+                    <?php switch ($value['class_name']):
+                        case "quote": ?>
                             <!--содержимое для поста-цитаты-->
                             <blockquote>
                                 <p>
-                                    <?= htmlspecialchars($value['content']); ?>
+                                    <?= htmlspecialchars($value['text_quote']); ?>
                                 </p>
-                                <cite>Неизвестный Автор</cite>
+                                <cite><?= htmlspecialchars($value['author_quote']); ?></cite>
                             </blockquote>
                             <?php break;
-                        case "post-link": ?>
+                        case "link": ?>
                             <!--содержимое для поста-ссылки-->
                             <div class="post-link__wrapper">
                                 <a class="post-link__external" href="http://" title="Перейти по ссылке">
@@ -113,22 +83,22 @@
                                             <h3><?= htmlspecialchars($value['title']); ?></h3>
                                         </div>
                                     </div>
-                                    <span><?= htmlspecialchars($value['content']); ?></span>
+                                    <span><?= htmlspecialchars($value['site_link']); ?></span>
                                 </a>
                             </div>
                             <?php break;
-                        case "post-photo": ?>
+                        case "photo": ?>
                             <!--содержимое для поста-фото-->
                             <div class="post-photo__image-wrapper">
-                                <img src="img/<?= $value['content'] ?>" alt="Фото от пользователя" width="360"
+                                <img src="img/<?= $value['image_link'] ?>" alt="Фото от пользователя" width="360"
                                      height="240">
                             </div>
                             <?php break;
-                        case "post-video": ?>
+                        case "video": ?>
                             <!--содержимое для поста-видео-->
                             <div class="post-video__block">
                                 <div class="post-video__preview">
-                                    <?= embed_youtube_cover($value['content']); ?>
+                                    <?= embed_youtube_cover($value['video_link']); ?>
                                     <img src="img/coast-medium.jpg" alt="Превью к видео" width="360" height="188">
                                 </div>
                                 <a href="post-details.html" class="post-video__play-big button">
@@ -139,9 +109,9 @@
                                 </a>
                             </div>
                             <?php break;
-                        case "post-text": ?>
+                        case "text": ?>
                             <!--содержимое для поста-текста-->
-                            <p><?= get_text_content(htmlspecialchars($value['content'])); ?></p>
+                            <p><?= get_text_content(htmlspecialchars($value['text'])); ?></p>
                             <?php break;
                     endswitch; ?>
                 </div>
@@ -149,11 +119,11 @@
                     <div class="post__author">
                         <a class="post__author-link" href="#" title="Автор">
                             <div class="post__avatar-wrapper">
-                                <img class="post__author-avatar" src="img/<?= $value['avatar']; ?>" alt="Аватар пользователя">
+                                <img class="post__author-avatar" src="img/<?= $value['avatar_link']; ?>" alt="Аватар пользователя">
                             </div>
                             <div class="post__info">
-                                <b class="post__author-name"><?= $value['user_name']; ?></b>
-                                <time class="post__time" datetime="" title="<?=$value['date']?>"><?= get_post_date ( $value['date'] )?></time>
+                                <b class="post__author-name"><?= $value['login']; ?></b>
+                                <time class="post__time" datetime="" title="<?=$value['pub_date_post']?>"><?= get_post_date ( $value['pub_date_post'] )?></time>
                             </div>
                         </a>
                     </div>
