@@ -80,3 +80,25 @@ function get_text_content(string $text, int $num_letters = 300) : string
 
     return $result;
 }
+
+/**
+ * функция вывода постов по категориям
+ *
+ * @param string $tab имя категории из массива GET
+ *
+ * @return string строка запроса в MySql
+ */
+function show_tasks_by_date($tab)
+{
+    $typesMap = [
+        'text' => 1,
+        'quote' => 2,
+        'photo' => 3,
+        'video' => 4,
+        'link' => 5
+    ];
+
+    return isset($typesMap[$tab])
+    ? "SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type AND content_type_id = {$typesMap[$tab]} ORDER BY views DESC"
+    : 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type ORDER BY views DESC';
+}
