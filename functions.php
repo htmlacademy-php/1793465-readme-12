@@ -90,19 +90,15 @@ function get_text_content(string $text, int $num_letters = 300) : string
  */
 function show_tasks_by_date($tab)
 {
+    $typesMap = [
+        'text' => 1,
+        'quote' => 2,
+        'photo' => 3,
+        'video' => 4,
+        'link' => 5
+    ];
 
-    if ($tab === 'text') {
-        $posts_sql = 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type AND content_type_id = 1 ORDER BY views DESC';
-    } elseif ($tab === 'quote') {
-        $posts_sql = 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type AND content_type_id = 2 ORDER BY views DESC';
-    } elseif ($tab === 'photo') {
-        $posts_sql = 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type AND content_type_id = 3 ORDER BY views DESC';
-    } elseif ($tab === 'video') {
-        $posts_sql = 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type AND content_type_id = 4 ORDER BY views DESC';
-    } elseif ($tab === 'link') {
-        $posts_sql = 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type AND content_type_id = 5 ORDER BY views DESC';
-    }elseif ($tab === 'posts') {
-        $posts_sql = 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type ORDER BY views DESC';
-    }
-    return $posts_sql;
+    return isset($typesMap[$tab])
+    ? "SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type AND content_type_id = {$typesMap[$tab]} ORDER BY views DESC"
+    : 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type ORDER BY views DESC';
 }
