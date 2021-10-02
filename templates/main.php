@@ -35,8 +35,11 @@
         <div class="popular__filters filters">
             <b class="popular__filters-caption filters__caption">Тип контента:</b>
             <ul class="popular__filters-list filters__list">
+                <?php if (isset($_GET['post_list'])) {
+                    $active_tab = $_GET['post_list'];
+                } ?>
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                    <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="index.php?post_list=posts">
+                    <a class="filters__button filters__button--ellipse filters__button--all <?= ($active_tab === '' || !isset($_GET['post_list'])) ? 'filters__button--active' : ''; ?> " href="index.php?post_list=posts">
                         <span>Все</span>
                     </a>
                 </li>
