@@ -8,7 +8,7 @@ $user_name = 'Ромaн'; // укажите здесь ваше имя
 
 if (isset($_GET['active_post'])) {
     $active_tab = $_GET['active_post'];
-    $post_sql = "SELECT * FROM `posts` JOIN users ON user_id = unique_id_user WHERE `unique_id_post` = '$active_tab'";
+    $post_sql = "SELECT * FROM `posts` JOIN users ON user_id = unique_id_user WHERE `id` = '$active_tab'";
     $result_post = mysqli_query($con, $post_sql);
     $post_active = mysqli_fetch_assoc($result_post);
     if (!$post_active) {

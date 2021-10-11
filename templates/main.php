@@ -35,19 +35,11 @@
         <div class="popular__filters filters">
             <b class="popular__filters-caption filters__caption">Тип контента:</b>
             <ul class="popular__filters-list filters__list">
-<<<<<<< HEAD
                 <? if (isset($_GET['post_list'])) {
-                    $active_tab = $_GET['post_list'];
-                   } ?>
-                <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                    <a class="filters__button filters__button--ellipse filters__button--all <?= (!isset($_GET['post_list']) || $active_tab === 'posts') ? 'filters__button--active' : ''; ?>" href="index.php?post_list=posts">
-=======
-                <?php if (isset($_GET['post_list'])) {
                     $active_tab = $_GET['post_list'];
                 } ?>
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                    <a class="filters__button filters__button--ellipse filters__button--all <?= ($active_tab === '' || !isset($_GET['post_list'])) ? 'filters__button--active' : ''; ?> " href="index.php?post_list=posts">
->>>>>>> cd1f685d7958eb55a223b6afdf4d278b07e924a6
+                    <a class="filters__button filters__button--ellipse filters__button--all <?= (!isset($_GET['post_list']) || $active_tab === 'posts') ? 'filters__button--active' : ''; ?>" href="index.php?post_list=posts">
                         <span>Все</span>
                     </a>
                 </li>

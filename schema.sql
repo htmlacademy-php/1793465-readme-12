@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `posts` (
-                        `unique_id_post` INT(11) NOT NULL AUTO_INCREMENT ,
+                        `id` INT(11) NOT NULL AUTO_INCREMENT ,
                         `pub_date_post` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
                         `title` VARCHAR(50) NOT NULL ,
                         `text` TEXT(2000) NULL ,
