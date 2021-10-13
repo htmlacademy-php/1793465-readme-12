@@ -6,6 +6,7 @@ require_once ('functions.php');
 $is_auth = rand(0, 1);
 $user_name = 'Ромaн'; // укажите здесь ваше имя
 
+
 /* SQL-запрос для получения типов контента */
 $content_type = "SELECT * FROM `content_type`";
 $result_content_type = mysqli_query($con, $content_type);
