@@ -61,7 +61,7 @@
             <article class="popular__post post <?= $value['class_name']; ?>">
                 <header class="post__header">
                     <h2>
-                        <a href="posts.php?active_post=<?= $value['unique_id_post'];?>"><?= htmlspecialchars($value['title']); ?></a>
+                        <a href="posts.php?active_post=<?= $value['post_id'];?>"><?= htmlspecialchars($value['title']); ?></a>
                     </h2>
                 </header>
                 <div class="post__main">

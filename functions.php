@@ -99,6 +99,40 @@ function show_tasks_by_date($tab)
     ];
 
     return isset($typesMap[$tab])
-    ? "SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type AND content_type_id = {$typesMap[$tab]} ORDER BY views DESC"
-    : 'SELECT * FROM posts JOIN users ON user_id = unique_id_user JOIN content_type ON content_type_id = unique_id_content_type ORDER BY views DESC';
+    ? "SELECT posts.id AS post_id, pub_date_post, title, text,
+    text_quote, author_quote, image_link, video_link, site_link, views, user_id,
+    content_type_id, hashtag_id, users.id AS users_id, reg_date, email, login, avatar_link, content_type.id AS cont_id, type_name, class_name
+    FROM posts JOIN users ON user_id = users.id JOIN content_type ON content_type_id = content_type.id
+    AND content_type_id = {$typesMap[$tab]} ORDER BY views DESC"
+
+    : 'SELECT posts.id AS post_id, pub_date_post, title, text,
+    text_quote, author_quote, image_link, video_link, site_link, views, user_id,
+    content_type_id, hashtag_id, users.id AS users_id, reg_date, email, login, avatar_link, content_type.id AS cont_id, type_name, class_name
+    FROM posts JOIN users ON user_id = users.id JOIN content_type ON content_type_id = content_type.id ORDER BY views DESC';
+}
+
+/**
+ * функция для проверки заполненности поля формы
+ *
+ * @param string $name имя поля формы
+ *
+ * @return string текст ошибки
+ */
+function validateFilled($name)
+{
+    if (empty($_POST[$name])) {
+        return 'Это поле должно быть заполнено';
+    }
+}
+
+/**
+ * Функция получения значений из POST запроса
+ *
+ * @param string $name input[name] из которого необходимо получить значение
+ *
+ * @return string Возвращает строку введенную пользователем, если форма отправленна с ошибкой.
+ */
+function getPostVal($name)
+{
+    return $_POST[$name] ?? '';
 }

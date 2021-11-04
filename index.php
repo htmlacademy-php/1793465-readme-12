@@ -13,9 +13,12 @@ $result_content_type = mysqli_query($con, $content_type);
 $content_type_arr = mysqli_fetch_all($result_content_type, MYSQLI_ASSOC);
 
 // запрос на показ девяти самых популярных постов
-$posts_sql = 'SELECT * FROM posts
-JOIN users ON user_id = unique_id_user
-JOIN content_type ON content_type_id = unique_id_content_type ORDER BY views DESC';
+$posts_sql = 'SELECT posts.id AS post_id, pub_date_post, title, text,
+text_quote, author_quote, image_link, video_link, site_link, views, user_id,
+content_type_id, hashtag_id, users.id AS users_id, reg_date, email, login, avatar_link, content_type.id AS cont_id, type_name, class_name
+FROM posts
+JOIN users ON user_id = users.id
+JOIN content_type ON content_type_id = content_type.id ORDER BY views DESC';
 $result_posts = mysqli_query($con, $posts_sql);
 
 if (isset($_GET['post_list'])) {
