@@ -120,8 +120,22 @@ function show_tasks_by_date($tab)
  */
 function validateFilled($name)
 {
-    if (empty($_POST[$name])) {
+    if (empty($name)) {
         return 'Это поле должно быть заполнено';
+    }
+}
+
+/**
+ * функция для проверки заполненности поля формы
+ *
+ * @param string $name имя поля формы
+ *
+ * @return string текст ошибки
+ */
+function validateImage($name)
+{
+    if (empty($form[$name])) {
+        return 'Необходимо выбрать файл изображения со своего компьютера, либо указать прямую ссылку на изображение, размещенное в интернете';
     }
 }
 
@@ -135,4 +149,47 @@ function validateFilled($name)
 function getPostVal($name)
 {
     return $_POST[$name] ?? '';
+}
+
+/**
+ * функция для проверки заполненности поля формы
+ *
+ * @param string $value имя поля формы
+ *
+ * @return string текст ошибки
+ */
+function validateYoutube($value)
+{
+    if (empty($value)) {
+        return 'Это поле должно быть заполнено';
+    } else {
+        return check_youtube_url($value);
+    }
+}
+
+/**
+ * функция для проверки заполненности поля формы
+ *
+ * @param string $value имя поля формы
+ *
+ * @return string текст ошибки
+ */
+function validateTypePictures($value)
+{
+    $mimeType = [
+        'image/png',
+        'image/jpeg',
+        'image/gif',
+        'image/jpg'
+    ];
+
+    if (!in_array($value, $mimeType)) {
+        return 'Загруженный файл должен быть формата png, jpeg, gif';
+    }
+}
+
+function validateWebPictures($value) {
+   if (!file_get_contents($value)) {
+       return 'По данной ссылке изображение недоступно';
+   }
 }

@@ -95,7 +95,7 @@
                         case "photo": ?>
                             <!--содержимое для поста-фото-->
                             <div class="post-photo__image-wrapper">
-                                <img src="img/<?= $value['image_link'] ?>" alt="Фото от пользователя" width="360"
+                                <img src="uploads/<?= $value['image_link'] ?>" alt="Фото от пользователя" width="360"
                                      height="240">
                             </div>
                             <?php break;

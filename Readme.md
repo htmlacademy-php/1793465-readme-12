@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Роман Анищенко](https://up.htmlacademy.ru/php/12/user/1793465).
-* Наставник: [Денис Ходаковский](https://htmlacademy.ru/profile/id1232355).
+* Наставник: [Андрей Пилипенко](https://htmlacademy.ru/profile/id93207).
 
 ---
 
