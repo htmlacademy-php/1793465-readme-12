@@ -161,7 +161,11 @@ function getPostVal($name)
 function validateYoutube($value)
 {
     if (empty($value)) {
+<<<<<<< HEAD
         return 'Ссылка на YouTube. Это поле должно быть заполнено';
+=======
+        return 'Это поле должно быть заполнено';
+>>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
     } else {
         return check_youtube_url($value);
     }
@@ -192,8 +196,11 @@ function validateWebPictures($value) {
    if (!file_get_contents($value)) {
        return 'По данной ссылке изображение недоступно';
    }
+<<<<<<< HEAD
 
    $type = 'image/' . pathinfo($value, PATHINFO_EXTENSION);
 
    validateTypePictures($type);
+=======
+>>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
 }

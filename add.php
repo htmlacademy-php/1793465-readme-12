@@ -54,12 +54,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             };
             break;
         case 3:
+<<<<<<< HEAD
             if (!empty($_FILES['image_link']['tmp_name'])) {
+=======
+            if (isset($_FILES['image_link']['tmp_name'])) {
+>>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                 $form['image_link_web'] = NULL;
                 $form['image_link'] = $_FILES['image_link']['type'];
 
 
                 $rules['image_link'] = function($value) {
+<<<<<<< HEAD
                     return validateTypePictures($value);
                 };
 
@@ -68,6 +73,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors['image_link_web'] = 'Необходимо выбрать файл изображения со своего компьютера, либо указать прямую ссылку на изображение, размещенное в интернете';
 
             } elseif (!empty($form['image_link_web'])) {
+=======
+
+                    return validateTypePictures($value);
+                };
+
+            } elseif ((!is_uploaded_file($_FILES['image_link']['tmp_name'])) && (!isset($form['image_link_web'])))  {
+
+                $errors['image_link'] = 'Необходимо выбрать файл изображения со своего компьютера, либо указать прямую ссылку на изображение, размещенное в интернете';
+
+                $errors['image_link_web'] = 'Необходимо выбрать файл изображения со своего компьютера, либо указать прямую ссылку на изображение, размещенное в интернете';
+
+            } elseif (isset($form['image_link_web'])) {
+>>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                 $form['image_link'] = NULL;
                 $rules['image_link_web'] = function($value) {
                     return validateWebPictures($value);
