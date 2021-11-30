@@ -1,12 +1,3 @@
-<?php
-var_dump($errors);
-?>
-<br>
-<?php
-var_dump($_POST);
-?>
-
-
 <main class="page__main page__main--adding-post">
     <div class="page__main-section">
         <div class="container">
@@ -32,11 +23,6 @@ var_dump($_POST);
                     </ul>
                 </div>
                 <div class="adding-post__tab-content">
-<<<<<<< HEAD
-=======
-                    <section class="adding-post__photo tabs__content <?= ($postTypeID == 3) ? 'tabs__content--active' : ''; ?>">
-                        <h2 class="visually-hidden">Форма добавления фото</h2>
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
 
                     <section class="adding-post__photo tabs__content <?= ($postTypeID == 3) ? 'tabs__content--active' : ''; ?>">
                         <h2 class="visually-hidden">Форма добавления фото</h2>
@@ -46,15 +32,8 @@ var_dump($_POST);
                                 <div class="form__text-inputs">
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="photo-heading">Заголовок <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <?php $emptyTitle = isset($errors['title']) ? 'form__input-section--error' : ''; ?>
                                         <div class="form__input-section <?= $emptyTitle ; ?>">
-=======
-
-
-                                        <?php $classname = isset($errors['title']) ? 'form__input-section--error' : ''; ?>
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="photo-heading" type="text" name="title" placeholder="Введите заголовок"
                                             value="<?= htmlspecialchars(getPostVal('title')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -67,11 +46,7 @@ var_dump($_POST);
                                     <?php $emptyImageLinkWeb = isset($errors['image_link_web']) ? 'form__input-section--error' : ''; ?>
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="photo-url">Ссылка из интернета</label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyImageLinkWeb ; ?>">
-=======
-                                        <div class="form__input-section">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="photo-url" type="text" name="image_link_web" placeholder="Введите ссылку"
                                                    value="<?= htmlspecialchars(getPostVal('image_link_web')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -84,11 +59,7 @@ var_dump($_POST);
                                     <?php $emptyHashtag = isset($errors['hashtag']) ? 'form__input-section--error' : ''; ?>
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="photo-tags">Теги</label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyHashtag; ?>">
-=======
-                                        <div class="form__input-section">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="photo-tags" type="text" name="hashtag" placeholder="Введите теги"
                                             value="<?= htmlspecialchars(getPostVal('hashtag')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -117,11 +88,7 @@ var_dump($_POST);
                             <div class="adding-post__input-file-container form__input-container form__input-container--file">
                                 <div class="adding-post__input-file-wrapper form__input-file-wrapper">
                                     <div class="adding-post__file-zone adding-post__file-zone--photo form__file-zone dropzone">
-<<<<<<< HEAD
                                         <input class="adding-post__input-file form__input-file" id="userpic-file-photo" type="file" name="image_link" title=" " value="">
-=======
-                                        <input class="adding-post__input-file form__input-file" id="userpic-file-photo" type="file" name="image_link" title=" ">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                         <div class="form__file-zone-text">
                                             <span>Выбрать фото</span>
                                         </div>
@@ -145,11 +112,7 @@ var_dump($_POST);
                                 <div class="form__text-inputs">
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="video-heading">Заголовок <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyTitle ; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="video-heading" type="text" name="title" placeholder="Введите заголовок"
                                             value="<?= htmlspecialchars(getPostVal('title')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -162,11 +125,7 @@ var_dump($_POST);
                                     <?php $emptyVideoLink = isset($errors['video_link']) ? 'form__input-section--error' : ''; ?>
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="video-url">Ссылка youtube <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyVideoLink; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="video-url" type="text" name="video_link" placeholder="Введите ссылку"
                                             value="<?= htmlspecialchars(getPostVal('video_link')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -178,11 +137,7 @@ var_dump($_POST);
                                     </div>
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="video-tags">Теги</label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyHashtag; ?>">
-=======
-                                        <div class="form__input-section">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="video-tags" type="text" name="hashtag" placeholder="Введите ссылку"
                                             value="<?= htmlspecialchars(getPostVal('hashtag')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -221,32 +176,20 @@ var_dump($_POST);
                                 <div class="form__text-inputs">
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="text-heading">Заголовок <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyTitle; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="text-heading" type="text" name="title" placeholder="Введите заголовок"
                                             value="<?= htmlspecialchars(getPostVal('title')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
                                             <div class="form__error-text">
                                                 <h3 class="form__error-title">Обязательное поле</h3>
-<<<<<<< HEAD
                                                 <p class="form__error-desc">Заполните заголовок</p>
-=======
-                                                <p class="form__error-desc">Заполните заголовок.</p>
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             </div>
                                         </div>
                                     </div>
                                     <?php $emptyText = isset($errors['text']) ? 'form__input-section--error' : ''; ?>
                                     <div class="adding-post__textarea-wrapper form__textarea-wrapper">
                                         <label class="adding-post__label form__label" for="post-text">Текст поста <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyText; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <textarea class="adding-post__textarea form__textarea form__input" id="post-text" placeholder="Введите текст публикации" name="text"
                                             value="<?= htmlspecialchars(getPostVal('text')); ?>"></textarea>
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -258,11 +201,7 @@ var_dump($_POST);
                                     </div>
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="post-tags">Теги</label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyHashtag; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="post-tags" type="text" name="hashtag" placeholder="Введите теги"
                                             value="<?= htmlspecialchars(getPostVal('hashtag')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -300,11 +239,7 @@ var_dump($_POST);
                                 <div class="form__text-inputs">
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="quote-heading">Заголовок <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyTitle; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="quote-heading" type="text" name="title" placeholder="Введите заголовок"
                                             value="<?= htmlspecialchars(getPostVal('title')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -317,11 +252,7 @@ var_dump($_POST);
                                     <?php $emptyTextQuote = isset($errors['text_quote']) ? 'form__input-section--error' : ''; ?>
                                     <div class="adding-post__input-wrapper form__textarea-wrapper">
                                         <label class="adding-post__label form__label" for="cite-text">Текст цитаты <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyTextQuote; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <textarea class="adding-post__textarea adding-post__textarea--quote form__textarea form__input" id="cite-text" placeholder="Текст цитаты" name="text_quote"
                                             value="<?= htmlspecialchars(getPostVal('text_quote')); ?>"></textarea>
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -334,11 +265,7 @@ var_dump($_POST);
                                     <?php $emptyAuthorQuote = isset($errors['author_quote']) ? 'form__input-section--error' : ''; ?>
                                     <div class="adding-post__textarea-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="quote-author">Автор <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyAuthorQuote; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="quote-author" type="text" name="author_quote"
                                             value="<?= htmlspecialchars(getPostVal('author_quote')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -350,11 +277,7 @@ var_dump($_POST);
                                     </div>
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="cite-tags">Теги</label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyHashtag; ?>">
-=======
-                                        <div class="form__input-section">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="cite-tags" type="text" name="hashtag" placeholder="Введите теги"
                                             value="<?= htmlspecialchars(getPostVal('hashtag')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -393,11 +316,7 @@ var_dump($_POST);
                                 <div class="form__text-inputs">
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="link-heading">Заголовок <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyTitle; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="link-heading" type="text" name="title" placeholder="Введите заголовок"
                                             value="<?= htmlspecialchars(getPostVal('title')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -410,11 +329,7 @@ var_dump($_POST);
                                     <?php $emptySiteLink = isset($errors['site_link']) ? 'form__input-section--error' : ''; ?>
                                     <div class="adding-post__textarea-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="post-link">Ссылка <span class="form__input-required">*</span></label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptySiteLink; ?>">
-=======
-                                        <div class="form__input-section <?= $classname; ?>">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="post-link" type="text" name="site_link"
                                             value="<?= htmlspecialchars(getPostVal('site_link')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
@@ -426,11 +341,7 @@ var_dump($_POST);
                                     </div>
                                     <div class="adding-post__input-wrapper form__input-wrapper">
                                         <label class="adding-post__label form__label" for="link-tags">Теги</label>
-<<<<<<< HEAD
                                         <div class="form__input-section <?= $emptyHashtag; ?>">
-=======
-                                        <div class="form__input-section">
->>>>>>> 8f9dcd73b29cb60933a38a827680be4a59019e2b
                                             <input class="adding-post__input form__input" id="link-tags" type="text" name="hashtag" placeholder="Введите ссылку"
                                             value="<?= htmlspecialchars(getPostVal('hashtag')); ?>">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
