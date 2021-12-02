@@ -5,28 +5,34 @@ require_once ('functions.php');
 
 $is_auth = rand(0, 1);
 $user_name = 'Ромaн'; // укажите здесь ваше имя
+$title = 'readme: популярное';
 
 
 /* SQL-запрос для получения типов контента */
-$content_type = "SELECT * FROM `content_type`";
-$result_content_type = mysqli_query($con, $content_type);
-$content_type_arr = mysqli_fetch_all($result_content_type, MYSQLI_ASSOC);
+$content_type_arr = getContentTypes($con);
 
-// запрос на показ девяти самых популярных постов
-$posts_sql = 'SELECT * FROM posts
-JOIN users ON user_id = unique_id_user
-JOIN content_type ON content_type_id = unique_id_content_type ORDER BY views DESC';
-$result_posts = mysqli_query($con, $posts_sql);
+// запрос на показ девяти самых популярных постов ??? почему только девяти, вроде ограничения на количество в запросе нет
 
-if (isset($_GET['post_list'])) {
-    $active_tab = $_GET['post_list'];
-    $sql = show_tasks_by_date($active_tab);
-    $result_posts = mysqli_query($con, $sql);
-}
+// получаем значение из GET параметра через фильтрацию потому, что она не вызывает ошибки в случае отсутствия ключа
+// а записывает null, плюс мы сразу фильтруем значение по нужному нам признаку
+$typeId = filter_input(INPUT_GET, 'type_id', FILTER_VALIDATE_INT) ?? 0;
+$posts_arr = getTasksDataByType($con, $typeId);
 
-$posts_arr = mysqli_fetch_all($result_posts, MYSQLI_ASSOC);
-
-$main_block = include_template('main.php', ['posts_arr' => $posts_arr, 'content_type_arr' =>  $content_type_arr]);
-$layout_block = include_template('layout.php', ['content' => $main_block, 'is_auth' => $is_auth, 'user_name' => $user_name, 'title' => 'readme: популярное']);
+$main_block = include_template(
+    'main.php',
+    [
+        'posts_arr' => $posts_arr,
+        'content_type_arr' =>  $content_type_arr,
+        'type_id' => $typeId
+    ]
+);
+$layout_block = include_template(
+    'layout.php',
+    [
+        'content' => $main_block,
+        'is_auth' => $is_auth,
+        'user_name' => $user_name,
+        'title' => $title
+    ]
+);
 print($layout_block);
-?>
