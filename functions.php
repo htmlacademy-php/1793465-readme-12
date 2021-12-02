@@ -6,7 +6,7 @@
  *
  * @return string строку с относительной датой и верным склонением
  */
-function get_post_date (string $str_date): string
+function get_post_date(string $str_date): string
 {
     date_default_timezone_set("Europe/Moscow");
     $date = strtotime($str_date);
@@ -49,7 +49,7 @@ function get_post_date (string $str_date): string
  *
  * @return string обрезанный текст с ссылкой на продолжение
  */
-function get_text_content(string $text, int $num_letters = 300) : string
+function get_text_content(string $text, int $num_letters = 300): string
 {
     $text_length = mb_strlen($text);
 
@@ -84,31 +84,35 @@ function get_text_content(string $text, int $num_letters = 300) : string
 /**
  * функция вывода постов по категориям
  *
- * @param string $tab имя категории из массива GET
+ * @param int $typeId имя категории из массива GET
  *
- * @return string строка запроса в MySql
+ * @return array строка запроса в MySql
  */
-function show_tasks_by_date($tab)
+function getTasksDataByType($con, $typeId)
 {
-    $typesMap = [
-        'text' => 1,
-        'quote' => 2,
-        'photo' => 3,
-        'video' => 4,
-        'link' => 5
-    ];
+    // переименовал название функции для лучшего понимания, что мы тут делаем
 
-    return isset($typesMap[$tab])
-    ? "SELECT posts.id AS post_id, pub_date_post, title, text,
-    text_quote, author_quote, image_link, video_link, site_link, views, user_id,
-    content_type_id, hashtag_id, users.id AS users_id, reg_date, email, login, avatar_link, content_type.id AS cont_id, type_name, class_name
-    FROM posts JOIN users ON user_id = users.id JOIN content_type ON content_type_id = content_type.id
-    AND content_type_id = {$typesMap[$tab]} ORDER BY views DESC"
+    // вынес запрос в отдельную переменную, что бы лучше читалось и понимать алгоритм действий в функции
+    $query = 'SELECT posts.id AS post_id, pub_date_post, title, text,
+            text_quote, author_quote, image_link, video_link, site_link, views, user_id,
+            content_type_id, hashtag_id, users.id AS users_id,
+            reg_date, email, login, avatar_link, content_type.id AS cont_id, type_name, class_name
+        FROM posts
+        JOIN users ON posts.user_id = users.id
+        JOIN content_type ON posts.content_type_id = content_type.id';
 
-    : 'SELECT posts.id AS post_id, pub_date_post, title, text,
-    text_quote, author_quote, image_link, video_link, site_link, views, user_id,
-    content_type_id, hashtag_id, users.id AS users_id, reg_date, email, login, avatar_link, content_type.id AS cont_id, type_name, class_name
-    FROM posts JOIN users ON user_id = users.id JOIN content_type ON content_type_id = content_type.id ORDER BY views DESC';
+    // отделил подстановку в запрос дополнительного условия чтобы не дублировать весь запрос
+    if ($typeId) {
+        $query .= ' AND content_type_id = ' . $typeId;
+    }
+
+    $query .= ' ORDER BY posts.views DESC';
+
+    // перенёс методы запросов и разбора ответа БД в саму функцию чтобы не путаться в файле где мы её вызываем
+    // и был чище код
+    $queryResult = mysqli_query($con, $query);
+
+    return mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
 }
 
 /**
@@ -186,14 +190,34 @@ function validateTypePictures($value)
     if (!in_array($value, $mimeType)) {
         return 'Загруженный файл должен быть формата png, jpeg, gif';
     }
+
+    return '';
 }
 
-function validateWebPictures($value) {
-   if (!file_get_contents($value)) {
-       return 'По данной ссылке изображение недоступно';
-   }
+function validateWebPictures($value)
+{
+    if (!filter_var($value, FILTER_VALIDATE_URL)) {
+        $result = 'Неверная ссылка';
+    } elseif (!file_get_contents($value)) {
+        $result = 'По данной ссылке изображение недоступно';
+    } else {
+        $type = 'image/' . pathinfo($value, PATHINFO_EXTENSION);
+        $result = validateTypePictures($type);
+    }
 
-   $type = 'image/' . pathinfo($value, PATHINFO_EXTENSION);
+    return $result;
+}
 
-   validateTypePictures($type);
+/**
+ * @param mysqli $con
+ * @return array
+ */
+function getContentTypes($con)
+{
+    // вынес запрос для упрощения кода в месте где нам необходимо вызывать эти запросы
+    // плюс мы теперь можем во всех местах вызывать только одну функцию не расписывая каждый раз как мы получаем данные
+    $query = 'SELECT * FROM `content_type`';
+    $queryResult = mysqli_query($con, $query);
+
+    return mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
 }

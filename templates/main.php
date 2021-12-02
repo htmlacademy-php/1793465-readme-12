@@ -1,3 +1,16 @@
+<?php
+// описал используемые в шаблоне переменные для лучшей работы IDE и упрощения понимания
+// описание делается с использованием PHPDoc https://ru.wikipedia.org/wiki/PHPDoc очень рекомендую изучить
+// в разработке на PHP используется практически повсеместно
+/**
+ * @var int|null $type_id
+ * @var array $content_type_arr
+ * @var array $posts_arr
+ */
+
+// в шаблоне поменял использование текстового значения типа поста на его идентификатор
+// добавил ссылкам в начале адреса слэш "/" для указания, что ссылки должны работать относительно домена
+?>
 <div class="container">
     <h1 class="page__title page__title--popular">Популярное</h1>
 </div>
@@ -35,17 +48,18 @@
         <div class="popular__filters filters">
             <b class="popular__filters-caption filters__caption">Тип контента:</b>
             <ul class="popular__filters-list filters__list">
-                <? if (isset($_GET['post_list'])) {
-                    $active_tab = $_GET['post_list'];
-                } ?>
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                    <a class="filters__button filters__button--ellipse filters__button--all <?= (!isset($_GET['post_list']) || $active_tab === 'posts') ? 'filters__button--active' : ''; ?>" href="index.php?post_list=posts">
+                    <a class="filters__button filters__button--ellipse filters__button--all
+                        <?= (!$type_id) ? 'filters__button--active' : ''; ?>"
+                       href="/index.php">
                         <span>Все</span>
                     </a>
                 </li>
                 <?php foreach ($content_type_arr as $type): ?>
                 <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--photo button <?= ($active_tab === $type['class_name']) ? 'filters__button--active' : ''; ?>" href="index.php?post_list=<?= $type['class_name']; ?>">
+                    <a class="filters__button filters__button--photo button
+                        <?= ($type_id === intval($type['id'])) ? 'filters__button--active' : ''; ?>"
+                       href="/index.php?type_id=<?= $type['id']; ?>">
                         <span class="visually-hidden"><?= $type['type_name']; ?></span>
                         <svg class="filters__icon" width="22" height="18">
                             <use xlink:href="#icon-filter-<?= $type['class_name']; ?>"></use>
@@ -61,7 +75,7 @@
             <article class="popular__post post <?= $value['class_name']; ?>">
                 <header class="post__header">
                     <h2>
-                        <a href="posts.php?active_post=<?= $value['post_id'];?>"><?= htmlspecialchars($value['title']); ?></a>
+                        <a href="/posts.php?active_post=<?= $value['post_id'];?>"><?= htmlspecialchars($value['title']); ?></a>
                     </h2>
                 </header>
                 <div class="post__main">

@@ -3,20 +3,24 @@ require_once('connect.php');
 require_once('helpers.php');
 require_once('functions.php');
 
+/**
+ * @var mysqli $con
+ */
+
 $is_auth = 1;
 $user_name = 'Ромaн'; // укажите здесь ваше имя
+$title = 'readme: добавить публикацию';
 
 /* SQL-запрос для получения типов контента */
-$content_type = "SELECT * FROM `content_type`";
-$result_content_type = mysqli_query($con, $content_type);
-$content_type_arr = mysqli_fetch_all($result_content_type, MYSQLI_ASSOC);
+$content_type_arr = getContentTypes($con);
 
-$postTypeID = filter_input(INPUT_GET, 'postTypeID', FILTER_SANITIZE_NUMBER_INT) ?? 1;
+// поменял фильтрацию на валидацию что бы возвращаемое значение было int, а не string
+$postTypeID = intval(filter_input(INPUT_GET, 'postTypeID', FILTER_SANITIZE_NUMBER_INT)) ?? 1;
 
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $postTypeID = filter_input(INPUT_POST, 'postTypeID', FILTER_SANITIZE_NUMBER_INT) ?? $postTypeID;
+    $postTypeID = intval(filter_input(INPUT_POST, 'postTypeID', FILTER_SANITIZE_NUMBER_INT)) ?? $postTypeID;
 
     $form = filter_input_array(INPUT_POST, [
         'title' => FILTER_SANITIZE_STRING,
@@ -54,18 +58,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             };
             break;
         case 3:
-            if (!empty($_FILES['image_link']['tmp_name'])) {
+            // перенёс проверку на пустоту первой проверкой чтобы проще было понимать алгоритм
+            if ((!is_uploaded_file($_FILES['image_link']['tmp_name'])) && (empty($form['image_link_web'])))  {
+
+                $errors['image_link_web'] = 'Необходимо выбрать файл изображения со своего компьютера, либо указать прямую ссылку на изображение, размещенное в интернете';
+
+            } elseif (!empty($_FILES['image_link']['tmp_name'])) {
                 $form['image_link_web'] = NULL;
                 $form['image_link'] = $_FILES['image_link']['type'];
-
 
                 $rules['image_link'] = function($value) {
                     return validateTypePictures($value);
                 };
-
-            } elseif ((!is_uploaded_file($_FILES['image_link']['tmp_name'])) && (empty($form['image_link_web'])))  {
-
-                $errors['image_link_web'] = 'Необходимо выбрать файл изображения со своего компьютера, либо указать прямую ссылку на изображение, размещенное в интернете';
 
             } elseif (!empty($form['image_link_web'])) {
                 $form['image_link'] = NULL;
@@ -84,6 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $rules['site_link'] = function($value) {
                 return validateFilled($value);
             };
+            break;
+        default:
+            // по спецификации PSR-12 https://www.php-fig.org/psr/psr-12/ необходимо каждый case заканчивать оператором
+            // break и добавил значение по умолчанию, это как бы правило хорошего тона. Логика проста, мы должны явно
+            // видеть описание всех вариантов обработки значения
             break;
     }
 
@@ -147,11 +156,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$main_block = include_template('add.php', ['content_type_arr' =>  $content_type_arr, 'postTypeID' => $postTypeID, 'errors' => $errors]);
-$layout_block = include_template('layout.php', [
-    'content' => $main_block,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'title' => 'readme: добавить публикацию'
-]);
+$main_block = include_template(
+    'add.php',
+    [
+        'content_type_arr' =>  $content_type_arr,
+        'postTypeID' => $postTypeID,
+        'errors' => $errors
+    ]
+);
+$layout_block = include_template(
+    'layout.php',
+    [
+        'content' => $main_block,
+        'is_auth' => $is_auth,
+        'user_name' => $user_name,
+        'title' => $title
+    ]
+);
 print($layout_block);

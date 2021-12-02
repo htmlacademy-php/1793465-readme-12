@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var array $content_type_arr
+ * @var int $postTypeID
+ */
+?>
 <main class="page__main page__main--adding-post">
     <div class="page__main-section">
         <div class="container">
@@ -11,8 +17,9 @@
 
                     <?php foreach ($content_type_arr as $type): ?>
                         <li class="adding-post__tabs-item filters__item">
-                            <a href="add.php?postTypeID=<?= $type['id']; ?>" class="adding-post__tabs-link filters__button filters__button--<?= $type['class_name']; ?>
-                            <?= ($postTypeID === $type['id']) ? 'filters__button--active tabs__item--active tabs__item' : ''; ?>   button">
+                            <a href="add.php?postTypeID=<?= $type['id']; ?>"
+                               class="adding-post__tabs-link filters__button filters__button--<?= $type['class_name']; ?>
+                            <?= ($postTypeID === intval($type['id'])) ? 'filters__button--active tabs__item--active tabs__item' : ''; ?>   button">
                                 <svg class="filters__icon" width="22" height="18">
                                     <use xlink:href="#icon-filter-<?= $type['class_name']; ?>"></use>
                                 </svg>
@@ -82,7 +89,6 @@
                                         <?= $errorHashtag = isset($errors['hashtag']) ? '<li class="form__invalid-item"> Добавьте хотя бы один хэштег </li>' : ''; ?>
                                     </ul>
                                 </div>
-                                <?php else: ?>
                                 <?php endif; ?>
                             </div>
                             <div class="adding-post__input-file-container form__input-container form__input-container--file">
