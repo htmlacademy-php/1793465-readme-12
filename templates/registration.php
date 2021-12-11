@@ -41,11 +41,7 @@
                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
                             <div class="form__error-text">
                                 <h3 class="form__error-title">Обязательное поле</h3>
-                                <?php if (isset($errors['password'])): ?>
-                                <p class="form__error-desc"><?= $errors['password']; ?></p>
-                                <?php elseif (isset($errors['passwordRepeatError'])): ?>
-                                    <p class="form__error-desc"><?= $errors['passwordRepeatError']; ?></p>
-                                <?php endif; ?>
+                                <p class="form__error-desc"><?= $errors['password'] ; ?></p>
                             </div>
                         </div>
                     </div>
@@ -57,11 +53,7 @@
                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
                             <div class="form__error-text">
                                 <h3 class="form__error-title">Обязательное поле</h3>
-                                <?php if (isset($errors['password-repeat'])): ?>
-                                    <p class="form__error-desc"><?= $errors['password-repeat']; ?></p>
-                                <?php elseif (isset($errors['password-repeatError'])): ?>
-                                    <p class="form__error-desc"><?= $errors['password-repeatError']; ?></p>
-                                <?php endif; ?>
+                                <p class="form__error-desc"><?= $errors['password-repeat'] ; ?></p>
                             </div>
                         </div>
                     </div>
@@ -71,12 +63,11 @@
                     <div class="form__invalid-block">
                         <b class="form__invalid-slogan">Пожалуйста, исправьте следующие ошибки:</b>
                         <ul class="form__invalid-list">
-                            <?php isset($errors['userpic-file']) ? $err_userpic = $errors['userpic-file'] :'';?>
-                            <?= isset($errors['email']) ? '<li class="form__invalid-item">Заполните корректный адрес электронной почты</li>' : ''; ?>
-                            <?= isset($errors['login']) ? '<li class="form__invalid-item">Заполните логин</li>' : ''; ?>
-                            <?= (isset($errors['password']) || isset($errors['password-repeat'])) ? '<li class="form__invalid-item">Заполните пароль</li>' : ''; ?>
-                            <?= isset($errors['passwordRepeatError']) ? '<li class="form__invalid-item">Пароли не совпадают</li>' : ''; ?>
-                            <?= isset($err_userpic) ? '<li class="form__invalid-item">' . $err_userpic . '</li>' : ''; ?>
+                            <?php foreach ($errors as $input => $message ): ?>
+                                <?php if (isset($input)):?>
+                                <li class="form__invalid-item"><?= $message; ?></li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 <?php else: ?>

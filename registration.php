@@ -18,7 +18,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     foreach ($required_fields as $field) {
         if (empty($form[$field])) {
-            $errors[$field] = 'Поле не заполнено';
+            switch ($field) {
+                case 'email':
+                    $errors['email'] = 'Поле электронная почта не заполнено';
+                    break;
+                case 'login':
+                    $errors['login'] = 'Поле логин не заполнено';
+                    break;
+                case 'password':
+                    $errors['password'] = 'Поле пароль не заполнено';
+                    break;
+                case 'password-repeat':
+                    $errors['password-repeat'] = 'Поле повтор пароля не заполнено';
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -31,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($form['password'] !== $form['password-repeat']) {
-        $errors['passwordRepeatError'] = 'Пароли не совпадают';
-        $errors['password-repeatError'] = 'Пароли не совпадают';
+        $errors['password-repeat'] = 'Проверочный пароль не совпадает';
     }
 
     if (empty($errors)) {
