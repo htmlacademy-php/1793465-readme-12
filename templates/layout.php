@@ -22,6 +22,7 @@
                 micro blogging
             </p>
         </div>
+        <?php if (isset($_SESSION['user'])): ?>
         <form class="header__search-form form" action="#" method="get">
             <div class="header__search">
                 <label class="visually-hidden">Поиск</label>
@@ -107,6 +108,32 @@
                 </nav>
             <?php endif; ?>
         </div>
+        <?php else: ?>
+            <form class="header__search-form form" action="#" method="get">
+                <div class="header__search">
+                </div>
+            </form>
+            <div class="header__nav-wrapper">
+                <nav class="header__nav">
+                    <ul class="header__my-nav">
+                        <li class="header__my-page header__my-page--popular">
+                        </li>
+                        <li class="header__my-page header__my-page--feed">
+                        </li>
+                        <li class="header__my-page header__my-page--messages">
+                        </li>
+                    </ul>
+                    <ul class="header__user-nav">
+                        <li class="header__authorization">
+                            <a class="header__user-button header__authorization-button button" href="login.html">Вход</a>
+                        </li>
+                        <li>
+                            <a href="registration.php" class="header__user-button header__user-button--active header__register-button button">Регистрация</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        <?php endif; ?>
     </div>
 </header>
 
