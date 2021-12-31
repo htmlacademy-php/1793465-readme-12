@@ -3,12 +3,16 @@ require_once('connect.php');
 require_once('helpers.php');
 require_once('functions.php');
 
+if (!isset($_SESSION['id'])) {
+    header('Location: /guest.php');
+    exit();
+}
+
 /**
  * @var mysqli $con
  */
 
-$is_auth = 1;
-$user_name = 'Ромaн'; // укажите здесь ваше имя
+$user_name = $_SESSION['login'];
 $title = 'readme: добавить публикацию';
 
 /* SQL-запрос для получения типов контента */
@@ -168,7 +172,6 @@ $layout_block = include_template(
     'layout.php',
     [
         'content' => $main_block,
-        'is_auth' => $is_auth,
         'user_name' => $user_name,
         'title' => $title
     ]

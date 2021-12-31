@@ -51,7 +51,7 @@
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
                     <a class="filters__button filters__button--ellipse filters__button--all
                         <?= (!$type_id) ? 'filters__button--active' : ''; ?>"
-                       href="/index.php">
+                       href="/popular.php">
                         <span>Все</span>
                     </a>
                 </li>
@@ -59,7 +59,7 @@
                 <li class="popular__filters-item filters__item">
                     <a class="filters__button filters__button--photo button
                         <?= ($type_id === intval($type['id'])) ? 'filters__button--active' : ''; ?>"
-                       href="/index.php?type_id=<?= $type['id']; ?>">
+                       href="/popular.php?type_id=<?= $type['id']; ?>">
                         <span class="visually-hidden"><?= $type['type_name']; ?></span>
                         <svg class="filters__icon" width="22" height="18">
                             <use xlink:href="#icon-filter-<?= $type['class_name']; ?>"></use>
