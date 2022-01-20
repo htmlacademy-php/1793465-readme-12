@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `hashtags` (
 
 CREATE TABLE IF NOT EXISTS `hashtags_posts` (
                          `id` INT(11) NOT NULL AUTO_INCREMENT ,
-                         `hashtag_id` VARCHAR(50) NOT NULL,
-                         `post_id` INT(11) NULL,
+                         `hashtag_id` INT(11) NOT NULL,
+                         `post_id` INT(11) NOT NULL,
                          PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 

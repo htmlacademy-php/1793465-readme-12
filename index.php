@@ -1,38 +1,65 @@
-<?php /** @noinspection PhpUndefinedVariableInspection */
+<?php
 require_once ('connect.php');
 require_once('helpers.php');
 require_once ('functions.php');
 
-$is_auth = rand(0, 1);
-$user_name = 'Ромaн'; // укажите здесь ваше имя
-$title = 'readme: популярное';
+if (isset($_SESSION['id'])) {
+    header('Location: /feed.php');
+    exit();
+}
+
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $form = filter_input_array(INPUT_POST, [
+        'email' => FILTER_SANITIZE_EMAIL,
+        'password' => FILTER_SANITIZE_SPECIAL_CHARS
+    ]);
+
+    $required_fields = ['email', 'password'];
+
+    foreach ($required_fields as $field) {
+        if (empty($form[$field])) {
+            switch ($field) {
+                case 'email':
+                    $errors['email'] = 'Поле электронная почта не заполнено';
+                    break;
+                case 'password':
+                    $errors['password'] = 'Поле пароль не заполнено';
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    $email = mysqli_real_escape_string($con, $form['email']);
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $res = mysqli_query($con, $sql);
+    $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+
+    if (empty($errors)) {
+        if (!mysqli_num_rows($res)) {
+            $errors['email'] = 'Пользователь с такой почтой не зарегистрирован';
+        } elseif (!password_verify($form['password'], $user['password']))  {
+              {
+                $errors['password'] = 'Пароли не совпадают';
+            }
+        }
 
 
-/* SQL-запрос для получения типов контента */
-$content_type_arr = getContentTypes($con);
+    }
 
-// запрос на показ девяти самых популярных постов ??? почему только девяти, вроде ограничения на количество в запросе нет
+    if (empty($errors)) {
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['login'] = $user['login'];
+        $_SESSION['avatar_link'] = $user['avatar_link'];
 
-// получаем значение из GET параметра через фильтрацию потому, что она не вызывает ошибки в случае отсутствия ключа
-// а записывает null, плюс мы сразу фильтруем значение по нужному нам признаку
-$typeId = filter_input(INPUT_GET, 'type_id', FILTER_VALIDATE_INT) ?? 0;
-$posts_arr = getTasksDataByType($con, $typeId);
+        header('Location: /feed.php');
+        exit();
+    }
+}
 
-$main_block = include_template(
-    'main.php',
-    [
-        'posts_arr' => $posts_arr,
-        'content_type_arr' =>  $content_type_arr,
-        'type_id' => $typeId
-    ]
-);
-$layout_block = include_template(
-    'layout.php',
-    [
-        'content' => $main_block,
-        'is_auth' => $is_auth,
-        'user_name' => $user_name,
-        'title' => $title
-    ]
-);
+$layout_block = include_template('guest.php', ['errors' => $errors]);
 print($layout_block);

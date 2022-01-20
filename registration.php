@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($res && empty($errors)) {
-            header('Location: /index.php');
+            header('Location: /popular.php');
             exit();
         }
     }
