@@ -3,12 +3,6 @@ require_once ('connect.php');
 require_once('helpers.php');
 require_once ('functions.php');
 
-<<<<<<< HEAD
-if (isset($_SESSION['id'])) {
-    header('Location: /feed.php');
-    exit();
-}
-
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -43,13 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         if (!mysqli_num_rows($res)) {
             $errors['email'] = 'Пользователь с такой почтой не зарегистрирован';
-        } elseif (!password_verify($form['password'], $user['password']))  {
-              {
-                $errors['password'] = 'Пароли не совпадают';
-            }
         }
 
-
+        if (!password_verify($form['password'], $user['password'])) {
+            $errors['password'] = 'Пароли не совпадают';
+        }
     }
 
     if (empty($errors)) {
@@ -64,10 +56,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $layout_block = include_template('guest.php', ['errors' => $errors]);
 print($layout_block);
-=======
-if (!isset($_SESSION['user'])) {
-    header('Location: /feed.php');
-    exit();
-}
-header('Location: /guest.php');
->>>>>>> f942cc893fa6687ecb90dcadf2ae2192d606e4d5

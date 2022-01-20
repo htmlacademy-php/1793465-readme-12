@@ -4,7 +4,11 @@ require_once('helpers.php');
 require_once ('functions.php');
 
 if (!isset($_SESSION['id'])) {
+<<<<<<< HEAD
     header('Location: /index.php');
+=======
+    header('Location: /guest.php');
+>>>>>>> f942cc893fa6687ecb90dcadf2ae2192d606e4d5
     exit();
 }
 
