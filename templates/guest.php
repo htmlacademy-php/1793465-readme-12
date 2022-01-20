@@ -59,11 +59,7 @@
         </section>
         <section class="authorization">
             <h2 class="visually-hidden">Авторизация</h2>
-<<<<<<< HEAD
             <form class="authorization__form form" action="index.php" method="post">
-=======
-            <form class="authorization__form form" action="guest.php" method="post">
->>>>>>> f942cc893fa6687ecb90dcadf2ae2192d606e4d5
                 <?php $emailError = isset($errors['email']) ? 'form__input-section--error' : ''; ?>
                 <div class="authorization__input-wrapper form__input-wrapper <?= $emailError ; ?>">
                     <input class="authorization__input authorization__input--login form__input" type="email" name="email" placeholder="Электронная почта">
@@ -71,7 +67,6 @@
                         <use xlink:href="#icon-input-user"></use>
                     </svg>
                     <label class="visually-hidden">Электронная почта</label>
-<<<<<<< HEAD
                     <?php if (isset($errors['email'])){
                         $email = $errors['email'];
                     } else {
@@ -79,9 +74,6 @@
                     }
                     ?>
                     <span class="form__error-label form__error-label--login"><?= $email ?></span>
-=======
-                    <span class="form__error-label form__error-label--login"><?= $errors['email'] ?></span>
->>>>>>> f942cc893fa6687ecb90dcadf2ae2192d606e4d5
                 </div>
                 <?php $passwordError = isset($errors['password']) ? 'form__input-section--error' : ''; ?>
                 <div class="authorization__input-wrapper form__input-wrapper <?= $passwordError ; ?>">
@@ -90,7 +82,6 @@
                         <use xlink:href="#icon-input-password"></use>
                     </svg>
                     <label class="visually-hidden">Пароль</label>
-<<<<<<< HEAD
                     <?php if (isset($errors['password'])){
                         $password = $errors['password'];
                     } else {
@@ -98,9 +89,6 @@
                     }
                     ?>
                     <span class="form__error-label"> <?= $password ?></span>
-=======
-                    <span class="form__error-label"><?= $errors['password'] ?></span>
->>>>>>> f942cc893fa6687ecb90dcadf2ae2192d606e4d5
                 </div>
                 <a class="authorization__recovery" href="#">Восстановить пароль</a>
                 <button class="authorization__submit button button--main" type="submit">Войти</button>

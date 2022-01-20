@@ -125,11 +125,7 @@
                     </ul>
                     <ul class="header__user-nav">
                         <li class="header__authorization">
-<<<<<<< HEAD
                             <a class="header__user-button header__authorization-button button" href="index.php">Вход</a>
-=======
-                            <a class="header__user-button header__authorization-button button" href="guest.php">Вход</a>
->>>>>>> f942cc893fa6687ecb90dcadf2ae2192d606e4d5
                         </li>
                         <li>
                             <a href="registration.php" class="header__user-button header__user-button--active header__register-button button">Регистрация</a>

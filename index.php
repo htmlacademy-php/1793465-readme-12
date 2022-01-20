@@ -3,7 +3,6 @@ require_once ('connect.php');
 require_once('helpers.php');
 require_once ('functions.php');
 
-<<<<<<< HEAD
 if (isset($_SESSION['id'])) {
     header('Location: /feed.php');
     exit();
@@ -64,10 +63,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $layout_block = include_template('guest.php', ['errors' => $errors]);
 print($layout_block);
-=======
-if (!isset($_SESSION['user'])) {
-    header('Location: /feed.php');
-    exit();
-}
-header('Location: /guest.php');
->>>>>>> f942cc893fa6687ecb90dcadf2ae2192d606e4d5
+
